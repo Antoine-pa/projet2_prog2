@@ -8,6 +8,7 @@ set(COMMON_SRCS
     src/socket.cpp
     src/client_socket.cpp
     src/serveur_socket.cpp
+    src/image.cpp
 )
 
 add_executable(client src/main_client.cpp src/client.cpp ${COMMON_SRCS})
