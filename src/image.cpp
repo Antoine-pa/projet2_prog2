@@ -6,6 +6,6 @@ void Image::display() {
     return;
 }
 
-Image Image::convolution(int* ker, int n) {
+Image Image::convolution(int_matrix ker) {
     return Image();
 }
