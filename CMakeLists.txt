@@ -11,6 +11,7 @@ set(COMMON_SRCS
     src/socket.cpp
     src/client_socket.cpp
     src/serveur_socket.cpp
+    src/image.cpp
 )
 
 add_executable(open_image src/open_image.cpp)
