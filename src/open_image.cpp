@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <chemin_vers_image>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <path_to_image>" << std::endl;
         return -1;
     }
 
@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            // Fermeture de la fenêtre
             if (event.type == sf::Event::Closed)
                 window.close();
         }

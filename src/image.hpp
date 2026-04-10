@@ -7,7 +7,6 @@
 using int_matrix = std::vector<std::vector<int>>;
 
 class Image {
-    sf::Texture _texture;
     public:
         Image();
         Image(std::string name);
