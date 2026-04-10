@@ -1,9 +1,12 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
-#include "ClientSocket.hpp"
+#include "client_socket.hpp"
 
 class Client {
-    ClientSocket cs;
+    ClientSocket _cs;
+public:
+    Client(std::string ip, int port);
+    void run();
 };
 
 #endif

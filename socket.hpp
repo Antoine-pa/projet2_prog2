@@ -1,18 +1,18 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 #include "message.hpp"
+#include <netinet/in.h>
 
 class Socket {
-    fd;
-    int port const;
-    addri sockaddr_in; //à définir 
-    const int FORMAT
-    public:
-        explicit Socket(int port)
-        void close();
-        void send(fd, Message message);
-        Message receive();
-        
+protected:
+    int _fd;
+    int _port;
+    struct sockaddr_in _addr;
+    void send(int fd, Message message);
+    Message receive(int fd);
+public:
+    explicit Socket(int port);
+    void close();
 };
 
 #endif

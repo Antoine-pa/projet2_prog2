@@ -3,7 +3,10 @@
 #include "serveur_socket.hpp"
 
 class Serveur {
-    ServeurSocket ss;
+    ServeurSocket _ss;
+public:
+    explicit Serveur(int port);
+    void run();
 };
 
 #endif
