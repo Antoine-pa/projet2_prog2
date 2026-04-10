@@ -34,5 +34,10 @@ Message Socket::receive(int fd) {
     int res = recv(fd, buff, 511, 0);
     if (res < 0) { perror("recv"); exit(1); }
     buff[res] = '\0';
-    return Message(buff, TEXT);
+    m_type type;
+    if (res == 0)
+        type = INFO; // connection closed by peer (EOF)
+    else
+        type = TEXT;
+    return Message(buff, type);
 }
