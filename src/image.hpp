@@ -1,10 +1,11 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 using int_matrix = std::vector<std::vector<int>>;
 
-class Image {
+class Image : public sf::Image {
     public:
         Image();
         void display();
