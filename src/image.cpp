@@ -22,7 +22,6 @@ void Image::display() {
         sf::Sprite image;
         image.setTexture(_texture);
         image.setPosition(sf::Vector2f(0,0));
-        image.scale(sf::Vector2f(1,1.5));
         window.clear();
         window.draw(image);
 

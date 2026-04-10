@@ -11,10 +11,9 @@ set(COMMON_SRCS
     src/socket.cpp
     src/client_socket.cpp
     src/serveur_socket.cpp
-    src/image.cpp
 )
 
-add_executable(open_image src/open_image.cpp)
+add_executable(open_image src/open_image.cpp src/image.cpp)
 add_executable(client src/main_client.cpp src/client.cpp ${COMMON_SRCS})
 add_executable(server src/main_serveur.cpp src/serveur.cpp ${COMMON_SRCS})
 
