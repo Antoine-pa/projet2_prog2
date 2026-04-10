@@ -5,15 +5,15 @@
 #include <vector>
 #include <iostream>
 
-using int_matrix = std::vector<std::vector<int>>;
+using float_matrix = std::vector<std::vector<float>>;
 
-class Image {
+class Image : sf::Image {
     sf::Texture _texture;
     public:
         Image();
         Image(std::string name);
         void display();
-        Image convolution(int_matrix ker);
+        Image convolution(float_matrix ker);
 };
 
 #endif
