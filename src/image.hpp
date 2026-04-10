@@ -5,6 +5,7 @@ class Image {
     public:
         Image();
         void display();
+        Image convolution(int* ker, int n);
 };
 
 #endif
