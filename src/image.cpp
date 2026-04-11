@@ -5,29 +5,28 @@ Image::Image(std::string name) {
         std::cout << "Could not load image " << name << std::endl;
         return;
     }
-    _texture.loadFromImage(*this);
 }
 
 Image::Image() {}
 
-void Image::display() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "display image");
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+sf::Vector2u Image::getSize() const {
+    return sf::Image::getSize();
+}
+
+void Image::display(sf::RenderWindow& window) {
+    sf::Vector2u size = getSize();
+    int rows = size.y;
+    int cols = size.x;
+    int cellSize = 1;
+
+    window.clear(sf::Color::Black);
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            sf::RectangleShape cell(sf::Vector2f(cellSize, cellSize));
+            cell.setPosition(c * cellSize, r * cellSize);
+            cell.setFillColor(getPixel(c, r));
+            window.draw(cell);
         }
-
-        window.clear(sf::Color::Black);
-
-        sf::Sprite image;
-        image.setTexture(_texture);
-        image.setPosition(sf::Vector2f(0,0));
-        window.clear();
-        window.draw(image);
-
-        window.display();
     }
 }
 
@@ -67,6 +66,5 @@ Image Image::convolution(float_matrix ker) {
         }
     }
 
-    result._texture.loadFromImage(result);
     return result;
 }

@@ -29,7 +29,21 @@ int main(int argc, char* argv[]) {
 
     Image img(argv[1]);
     Image img2 = img.convolution(kernels[conv_name]);
-    img2.display();
+
+    sf::Vector2u size = img2.getSize();
+    sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Convolution");
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+            if (event.type == sf::Event::Resized)
+                window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+        }
+        img2.display(window);
+        window.display();
+    }
 
     return 0;
 }
