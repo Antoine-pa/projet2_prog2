@@ -21,11 +21,11 @@ Request Serveur::listen_req() {
                 std::string content = msg.to_string();
                 std::cout << "received: " << content << "\n";
                 
-                int r = 0, g = 0, b = 0;
+                int r = 0, g = 0, b = 0, x = 0, y = 0;
                 std::istringstream iss(content);
                 
                 if (iss >> r >> g >> b) {
-                    return Request(r, g, b);
+                    return Request(r, g, b, x, y);
                 } else {
                     std::cerr << "error: invalid coordinate format\n";
                     _ss.send(Message("error: invalid format", ERROR));

@@ -18,11 +18,15 @@ class Request : public Message {
     int _coord_r;
     int _coord_g;
     int _coord_b;
+    int _x;
+    int _y;
 public:
-    explicit Request(int r, int g, int b);
+    explicit Request(int r, int g, int b, int x, int y);
     int get_r() const;
     int get_g() const;
     int get_b() const;
+    int get_x() const;
+    int get_y() const;
 };
 
 #endif
