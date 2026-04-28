@@ -1,15 +1,18 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
-#include <vector>
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <iostream>
 
-using int_matrix = std::vector<std::vector<int>>;
+using float_matrix = std::vector<std::vector<float>>;
 
-class Image : public sf::Image {
+class Image : sf::Image {
     public:
         Image();
-        void display();
-        Image convolution(int_matrix ker);
+        Image(std::string name);
+        sf::Vector2u getSize() const;
+        void display(sf::RenderWindow& window);
+        Image convolution(float_matrix ker);
 };
 
 #endif
