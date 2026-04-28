@@ -1,10 +1,12 @@
 #ifndef MESSAGE_HPP
 #define MESSAGE_HPP
 #include <string>
+#include <sstream>
 
 typedef enum { TEXT, ERROR, INFO, REQ} m_type;
 
 class Message {
+protected:
     std::string _content;
     m_type _type;
 public:
@@ -15,18 +17,19 @@ public:
 };
 
 class Request : public Message {
+    int _x;
+    int _y;
     int _coord_r;
     int _coord_g;
     int _coord_b;
-    int _x;
-    int _y;
+    void reload_content();
 public:
-    explicit Request(int r, int g, int b, int x, int y);
+    explicit Request(int x, int y, int r, int g, int b);
+    int get_x() const;
+    int get_y() const;
     int get_r() const;
     int get_g() const;
     int get_b() const;
-    int get_x() const;
-    int get_y() const;
 };
 
 #endif
