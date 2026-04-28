@@ -19,3 +19,5 @@ add_executable(client src/main_client.cpp src/client.cpp ${COMMON_SRCS})
 add_executable(server src/main_serveur.cpp src/serveur.cpp ${COMMON_SRCS})
 
 target_link_libraries(open_image sfml-graphics sfml-window sfml-system)
+target_link_libraries(client sfml-graphics sfml-window sfml-system)
+target_link_libraries(server sfml-graphics sfml-window sfml-system)
