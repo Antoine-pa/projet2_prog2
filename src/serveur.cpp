@@ -4,39 +4,56 @@
 #include <sstream>
 #include <ctime>
 
-Serveur::Serveur(int port) : _ss(port) { std::srand(std::time(nullptr)); }
+void Serveur::send_response(const Message& msg) {
+    _ss.send(msg);
+}
 
-Request Serveur::listen_req() {
+void Serveur::close_current_client() {
+    _ss.close_client();
+}
+
+Serveur::Serveur(int port, unsigned int width, unsigned int height)
+    : _ss(port), _width(width), _height(height) {
+    std::srand(std::time(nullptr));
     _ss.bind();
     _ss.listen();
-    std::cerr << "Server ready\n";
-    
+    std::cerr << "[Serveur] Demarre sur le port " << port << " (" << width << "x" << height << ")\n";
+}
+
+Request Serveur::listen_req() {
     while (true) {
         _ss.accept();
-        
-        while (true) {
-            Message msg = _ss.receive();
-            
-            if (msg.get_type() == REQ) {
-                std::string content = msg.to_string();
-                std::cout << "received: " << content << "\n";
-                
-                int r = 0, g = 0, b = 0, x = 0, y = 0;
-                std::istringstream iss(content);
-                
-                if (iss >> r >> g >> b) {
-                    return Request(r, g, b, x, y);
-                } else {
-                    std::cerr << "error: invalid coordinate format\n";
-                    _ss.send(Message("error: invalid format", ERROR));
-                }
-            } else {
-                std::cerr << "unknown command: " << msg.to_string() << "\n";
-                _ss.send(Message("error: expected REQ", ERROR));
-                break; // On casse la boucle pour fermer ce client et en attendre un autre
-            }
+        Message msg = _ss.receive();
+        std::string content = msg.to_string();
+
+        if (content == "size") {
+            std::string response = std::to_string(_width) + " " + std::to_string(_height);
+            _ss.send(Message(response, INFO));
+            _ss.close_client();
+            continue;
         }
-        _ss.close_client();
+
+        int x = 0, y = 0, r = 0, g = 0, b = 0;
+        std::istringstream iss(content);
+        if (iss >> x >> y >> r >> g >> b) {
+            if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
+                std::cerr << "[Erreur] Couleur invalide: " << content << "\n";
+                _ss.send(Message("error: invalid color", ERROR));
+                _ss.close_client();
+                continue;
+            }
+            if (x < 0 || (unsigned int)x >= _width || y < 0 || (unsigned int)y >= _height) {
+                std::cerr << "[Erreur] Coordonnees hors-canvas: " << content << "\n";
+                _ss.send(Message("error: out of bounds", ERROR));
+                _ss.close_client();
+                continue;
+            }
+            return Request(x, y, r, g, b);
+        } else {
+            std::cerr << "[Erreur] Format invalide recu: " << content << "\n";
+            _ss.send(Message("error: invalid format", ERROR));
+            _ss.close_client();
+        }
     }
 }
 

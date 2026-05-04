@@ -13,6 +13,7 @@ protected:
 public:
     explicit Socket(int port);
     void close();
+    int get_fd() const { return _fd; }
 };
 
 #endif
